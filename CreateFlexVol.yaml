@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  collections:
+    - netapp.ontap
+  name: Volume Action
+  vars:
+    hostname: shm-na
+    username: "{{ netapp_user }}"
+    password: "{{ netapp_password }}"
+    aggr: SHM_NA01_AGGR01
+    vol_name: AnsibleVolume1
+  tasks:
+  - name: Volume Creation
+    na_ontap_volume:
+      state: absent
+      name: AnsibleVolume1
+      vserver: SHM-IT-SVM
+      aggregate_name: SHM_NA01_AGGR01
+      size: 10
+      size_unit: gb
+      policy: default
+      junction_path: /AnsibleVolume1
+      hostname: shm-na
+      username: "{{ netapp_user }}"
+      password: "{{ netapp_password }}"
+      https: true
+      validate_certs: false
